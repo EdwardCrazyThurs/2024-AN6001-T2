@@ -6,11 +6,11 @@
 
 <body>
     <div class="container">
-        <h2>Sentiment Score{{r}}</h2>
+        <h2>Sentiment Score</h2>
+        <p>Polarity: {{r.polarity}}</p>
+        <p>Subjectivity: {{r.subjectivity}}</p>
         <form action="/main" method="post">
-            <input type = "submit" value="Main">
+            <input type="submit" value="Main">
         </form>
     </div>
 </body>
-
-
