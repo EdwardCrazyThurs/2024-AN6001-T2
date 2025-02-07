@@ -6,46 +6,46 @@ import textblob
 import google.generativeai as genai
 import os
 
-
-#api = "AIzaSyDYxMjWDCrSYQcT0SKZIHEftYaW5unNZiM"
-api = os.getenv("makersuite")
-genai.configure(api_key = api)
-model = genai.GenerativeModel('gemini-1.5-flash')
+#GEMINI_API_KEY = "AIzaSyBvcDnn2upjJwSWw89RDx99lFaIv2DCif0"
+GEMINI_API_KEY = os.getenv('makersuite')
+genai.configure(api_key = GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 app = Flask("__name__")
 
 @app.route("/", methods = ["GET","POST"])
 def index():
-    return(render_template("index.html"))
+    return(render_template("index2.html"))
 
 @app.route("/main", methods = ["GET","POST"])
 def main():
-    name = request.form.get('q')
-    return(render_template("main.html"))
+    name = request.form.get('q')
+    return(render_template("main.html"))
 
 @app.route("/SA", methods = ["GET","POST"])
 def SA():
-    return(render_template("SA.html"))
+    return(render_template("SA.html"))
 
 @app.route("/SA_result", methods = ["GET","POST"])
 def SA_result():
-    q = request.form.get("q")
-    r = textblob.TextBlob(q).sentiment
-    return(render_template("SA_result.html",r = r))
+    q = request.form.get('q')
+    r = textblob.TextBlob(q).sentiment
+    return(render_template("SA_result.html",r = r))
 
+@app.route("/paynow", methods = ["GET","POST"])
+def GenAI():
+    return(render_template("GenAI.html"))
 
+@app.route("/GenAI", methods = ["GET","POST"])
+def GenAI():
+    return(render_template("paynow.html"))
 
-@app.route("/genAI", methods = ["GET","POST"])
-def genAI():
-    return(render_template("genAI.html"))
-
-
-@app.route("/genAI_result", methods = ["GET","POST"])
-def genAI_result():
-    q = request.form.get("q")
-    r = model.generate_content(q)
-    return(render_template("genAI_result.html",r = r.candidates[0].content.parts[0].text))
+@app.route("/GenAI_result", methods = ["GET","POST"])
+def GenAI_result():
+    q = request.form.get('q')
+    r = model.generate_content(q)
+    return(render_template("GenAI_result.html",r = r.candidates[0].content.parts[0].text))
 
 if __name__ == "__main__":
-    app.run(debug= True, port = 1234)
+    app.run(debug= True)
 
